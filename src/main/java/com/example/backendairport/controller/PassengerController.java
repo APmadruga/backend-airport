@@ -1,5 +1,4 @@
 package com.example.backendairport.controller;
-
 import com.example.backendairport.model.Airplane;
 import com.example.backendairport.model.Passenger;
 import com.example.backendairport.controller.request.PassengerCreationRequest;
@@ -18,17 +17,13 @@ public class PassengerController {
 
     @Autowired
     PassengerService passengerService;
-
     @Autowired
     AirplaneService airplaneService;
-
 
     //Create
     @PostMapping(value ="create-passenger", consumes = "application/json", produces = "application/json")
     public Passenger createPassenger(@RequestBody @Valid PassengerCreationRequest passengerCreationRequest)  {
-
         Airplane airplaneToBeAssociated = airplaneService.getById(passengerCreationRequest.getAirplaneId());
-
         Passenger newPassenger = Passenger
                 .builder()
                 .name(passengerCreationRequest.getName())
@@ -37,7 +32,6 @@ public class PassengerController {
                 .ticketPrice(passengerCreationRequest.getTicketPrice())
                 .build();
         System.out.println("BLA");
-
         return passengerService.save(newPassenger);
     }
 
@@ -56,7 +50,6 @@ public class PassengerController {
     //Update
     @PutMapping(value ="update-passenger/{id}", consumes = "application/json", produces = "application/json")
     public Passenger updatePassenger(@PathVariable(value = "id") Long passengerId,@RequestBody @Valid PassengerCreationRequest passengerCreationRequest)  {
-
         return passengerService.updatePassengerDetails(
                 passengerId, passengerCreationRequest
                 );
