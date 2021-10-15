@@ -1,10 +1,7 @@
-package com.example.backendairport.request;
+package com.example.backendairport.controller.request;
 
-import com.example.backendairport.model.Airplane;
 import lombok.*;
-import org.springframework.stereotype.Component;
 
-import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 
 //POJO

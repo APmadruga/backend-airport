@@ -1,7 +1,7 @@
 package com.example.backendairport.controller;
 
 import com.example.backendairport.model.CabinCrew;
-import com.example.backendairport.request.CabinCrewCreationRequest;
+import com.example.backendairport.controller.request.CabinCrewCreationRequest;
 import com.example.backendairport.service.CabinCrewService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

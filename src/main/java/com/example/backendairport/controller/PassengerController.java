@@ -2,14 +2,13 @@ package com.example.backendairport.controller;
 
 import com.example.backendairport.model.Airplane;
 import com.example.backendairport.model.Passenger;
-import com.example.backendairport.request.PassengerCreationRequest;
+import com.example.backendairport.controller.request.PassengerCreationRequest;
 import com.example.backendairport.service.AirplaneService;
 import com.example.backendairport.service.PassengerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
-import javax.validation.constraints.Positive;
 import java.util.List;
 
 @RestController

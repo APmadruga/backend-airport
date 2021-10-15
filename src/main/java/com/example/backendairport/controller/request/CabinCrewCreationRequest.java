@@ -1,14 +1,9 @@
-package com.example.backendairport.request;
+package com.example.backendairport.controller.request;
 
-import com.example.backendairport.model.Airplane;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.springframework.stereotype.Component;
-
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 
 @AllArgsConstructor
 @NoArgsConstructor
