@@ -4,7 +4,6 @@ import com.example.backendairport.model.Passenger;
 import com.example.backendairport.controller.request.PassengerCreationRequest;
 import com.example.backendairport.service.AirplaneService;
 import com.example.backendairport.service.PassengerService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
@@ -14,11 +13,13 @@ import java.util.List;
 @RequestMapping("/api")
 @Validated
 public class PassengerController {
-
-    @Autowired
     PassengerService passengerService;
-    @Autowired
     AirplaneService airplaneService;
+
+    public PassengerController(PassengerService passengerService, AirplaneService airplaneService) {
+        this.passengerService = passengerService;
+        this.airplaneService = airplaneService;
+    }
 
     //Create
     @PostMapping(value ="create-passenger", consumes = "application/json", produces = "application/json")
@@ -71,5 +72,4 @@ public class PassengerController {
     public void deletePassenger(@PathVariable(value = "id") Long passengerId) {
         passengerService.deleteById(passengerId);
     }
-
 }

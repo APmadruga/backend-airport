@@ -1,23 +1,22 @@
 package com.example.backendairport.controller;
-
 import com.example.backendairport.model.CabinCrew;
 import com.example.backendairport.controller.request.CabinCrewCreationRequest;
 import com.example.backendairport.service.CabinCrewService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
-
 
 @RestController
 @RequestMapping("/api")
 @Validated
 public class CabinCrewController {
 
-    @Autowired
     CabinCrewService cabinCrewService;
+
+    public CabinCrewController(CabinCrewService cabinCrewService) {
+        this.cabinCrewService = cabinCrewService;
+    }
 
     //Create
     @PostMapping(value ="create-cabinCrew", consumes = "application/json", produces = "application/json")
@@ -63,5 +62,4 @@ public class CabinCrewController {
     public void deleteCabinCrew(@PathVariable(value = "id") Long cabinCrewId) {
         cabinCrewService.deleteById(cabinCrewId);
     }
-
 }

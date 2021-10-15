@@ -1,7 +1,5 @@
 package com.example.backendairport.controller.request;
-
 import lombok.*;
-
 import javax.validation.constraints.NotBlank;
 
 //POJO
@@ -10,13 +8,10 @@ import javax.validation.constraints.NotBlank;
 @Getter
 @Builder
 public class PassengerCreationRequest {
-
     @NotBlank(message = "Name is a mandatory field.")
     private String name;
     private int passportNumber;
     private int ticketNumber;
     private int ticketPrice;
     private Long airplaneId;
-
-
 }

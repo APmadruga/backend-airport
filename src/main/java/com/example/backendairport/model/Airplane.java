@@ -1,8 +1,5 @@
 package com.example.backendairport.model;
-
-
 import lombok.*;
-
 import javax.persistence.*;
 
 @Getter
@@ -14,16 +11,12 @@ import javax.persistence.*;
 @Table(name ="Airplane")
 @Entity
 public class Airplane {
-
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-
     @Enumerated
     private AirplaneType airplaneType;
     private String name;
-
     private int passengersCapacity;
     private int cargoCapacity;
-
 }

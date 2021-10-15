@@ -1,12 +1,9 @@
 package com.example.backendairport.controller;
-
 import com.example.backendairport.model.Airplane;
 import com.example.backendairport.service.AirplaneService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @RestController
@@ -14,8 +11,11 @@ import java.util.List;
 @Validated
 public class AirplaneController {
 
-    @Autowired
     AirplaneService airplaneService;
+
+    public AirplaneController(AirplaneService airplaneService) {
+        this.airplaneService = airplaneService;
+    }
 
     //Crud
     @PostMapping(value ="create-airplane", consumes = "application/json", produces = "application/json")
