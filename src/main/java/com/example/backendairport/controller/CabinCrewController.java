@@ -19,7 +19,7 @@ public class CabinCrewController {
     }
 
     //Create
-    @PostMapping(value ="create-cabinCrew", consumes = "application/json", produces = "application/json")
+    @PostMapping(value ="/create-cabinCrew", consumes = "application/json", produces = "application/json")
     public CabinCrew createCabinCrew(@RequestBody CabinCrewCreationRequest cabinCrewCreationRequest){
         CabinCrew newCabinCrew = CabinCrew
                 .builder()

@@ -18,6 +18,7 @@ public class Passenger {
     private int passportNumber;
     private int ticketNumber;
     private int ticketPrice;
+
     @ManyToOne
     @JoinColumn(name= "id_airplane")
     private Airplane airplane;
