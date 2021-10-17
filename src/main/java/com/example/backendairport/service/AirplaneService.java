@@ -1,9 +1,11 @@
 package com.example.backendairport.service;
+import com.example.backendairport.controller.request.AirplaneCreationRequest;
+import com.example.backendairport.exception.ResourceNotFound;
 import com.example.backendairport.model.Airplane;
+import com.example.backendairport.model.AirplaneType;
 import com.example.backendairport.repository.AirplaneRepository;
 import org.springframework.stereotype.Service;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class AirplaneService{
@@ -22,15 +24,44 @@ public class AirplaneService{
         airplaneRepository.deleteById(aLong);
     }
 
-    public <S extends Airplane> S save(S entity) {
-        return airplaneRepository.save(entity);
+    public Airplane findById(Long aLong) {
+        return airplaneRepository.findById(aLong).orElseThrow(() -> new ResourceNotFound("Airplane doesn't exist"));
     }
 
-    public Optional<Airplane> findById(Long aLong) {
-        return airplaneRepository.findById(aLong);
+    public Airplane create(AirplaneCreationRequest airplaneCreationRequest) {
+        if ((airplaneCreationRequest.getAirplaneType() != AirplaneType.AIRBUSA320) ||(airplaneCreationRequest.getAirplaneType() != AirplaneType.BOEING747) ||(airplaneCreationRequest.getAirplaneType() != AirplaneType.JETPLANE)){
+            throw new ResourceNotFound("You can only choose AIRBUSA320 or BOING747 or JETPLANE in AirplaneType");
+        }
+        AirplaneType airplaneType = airplaneCreationRequest.getAirplaneType();
+        String airplaneName = airplaneCreationRequest.getName();
+        int passengersCapacity = airplaneCreationRequest.getPassengersCapacity();
+        int cargoCapacity = airplaneCreationRequest.getCargoCapacity();
+        Airplane newAirplane = Airplane
+                .builder()
+                .name(airplaneName)
+                .airplaneType(airplaneType)
+                .cargoCapacity(cargoCapacity)
+                .passengersCapacity(cargoCapacity)
+                .build();
+        return airplaneRepository.save(newAirplane);
     }
 
-    public Airplane getById(Long aLong) {
-        return airplaneRepository.getById(aLong);
+    public Airplane updateAirplane(Long airplaneId, AirplaneCreationRequest airplaneCreationRequest) {
+        if ((airplaneCreationRequest.getAirplaneType() != AirplaneType.AIRBUSA320) ||(airplaneCreationRequest.getAirplaneType() != AirplaneType.BOEING747) ||(airplaneCreationRequest.getAirplaneType() != AirplaneType.JETPLANE)){
+            throw new ResourceNotFound("You can only choose AIRBUSA320 or BOING747 or JETPLANE in AirplaneType");
+        }
+        AirplaneType airplaneType = airplaneCreationRequest.getAirplaneType();
+        String airplaneName = airplaneCreationRequest.getName();
+        int passengersCapacity = airplaneCreationRequest.getPassengersCapacity();
+        int cargoCapacity = airplaneCreationRequest.getCargoCapacity();
+        if(!airplaneRepository.existsById(airplaneId)){
+            throw new ResourceNotFound("Airplane doesn't exist");
+        }
+        Airplane airplaneToBeUpdated = airplaneRepository.getById(airplaneId);
+        airplaneToBeUpdated.setAirplaneType(airplaneType);
+        airplaneToBeUpdated.setPassengersCapacity(passengersCapacity);
+        airplaneToBeUpdated.setCargoCapacity(cargoCapacity);
+        airplaneToBeUpdated.setName(airplaneName);
+        return airplaneRepository.save(airplaneToBeUpdated);
     }
 }

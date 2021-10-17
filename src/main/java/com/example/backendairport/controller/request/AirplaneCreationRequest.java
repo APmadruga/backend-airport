@@ -4,7 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-
 import javax.validation.constraints.Size;
 
 @AllArgsConstructor
@@ -13,7 +12,7 @@ import javax.validation.constraints.Size;
 @Builder
 public class AirplaneCreationRequest {
     private AirplaneType airplaneType;
-    @Size(min = 2, message = "Name should have atleast 2 characters")
+    @Size(min = 2, message = "Name should have at least 2 characters")
     private String name;
     private int passengersCapacity;
     private int cargoCapacity;

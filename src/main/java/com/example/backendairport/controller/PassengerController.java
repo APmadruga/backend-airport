@@ -22,14 +22,10 @@ public class PassengerController {
         this.airplaneService = airplaneService;
     }
 
+
     @PostMapping(value ="/passenger", consumes = "application/json", produces = "application/json")
     public ResponseEntity createPassenger(@RequestBody @Valid PassengerCreationRequest passengerCreationRequest)  {
-        Long airplaneId = passengerCreationRequest.getAirplaneId();
-        String name = passengerCreationRequest.getName();
-        int passportNumber = passengerCreationRequest.getPassportNumber();
-        int ticketNumber = passengerCreationRequest.getTicketNumber();
-        int ticketPrice = passengerCreationRequest.getTicketPrice();
-        Long passengerId = passengerService.save(airplaneId, name, passportNumber, ticketNumber, ticketPrice).getId();
+        Long passengerId = passengerService.save(passengerCreationRequest).getId();
         return ResponseEntity.created(URI.create("/passenger/" + passengerId)).body("Operation run smoothly");
     }
 
@@ -45,7 +41,7 @@ public class PassengerController {
 
     @PutMapping(value ="passenger/{id}", consumes = "application/json", produces = "application/json")
     public ResponseEntity updatePassenger(@PathVariable(value = "id") Long passengerId,@RequestBody @Valid PassengerCreationRequest passengerCreationRequest)  {
-        passengerService.updatePassengerDetails(passengerId, passengerCreationRequest).getId();
+        passengerService.updatePassengerDetails(passengerId, passengerCreationRequest);
         return ResponseEntity.created(URI.create("/passenger/" + passengerId)).body("Operation run smoothly");
     }
 

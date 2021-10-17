@@ -5,11 +5,8 @@ import com.example.backendairport.model.Passenger;
 import com.example.backendairport.repository.AirplaneRepository;
 import com.example.backendairport.repository.PassengerRepository;
 import com.example.backendairport.controller.request.PassengerCreationRequest;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 import java.util.List;
-
 
 @Service
 public class PassengerService{
@@ -56,7 +53,12 @@ public class PassengerService{
         return passengerRepository.save(passengerToBeUpdated);
     }
 
-    public Passenger save(Long airplaneId, String name, int passportNumber, int ticketNumber, int ticketPrice) {
+    public Passenger save(PassengerCreationRequest passengerCreationRequest) {
+        Long airplaneId = passengerCreationRequest.getAirplaneId();
+        String name = passengerCreationRequest.getName();
+        int passportNumber = passengerCreationRequest.getPassportNumber();
+        int ticketNumber = passengerCreationRequest.getTicketNumber();
+        int ticketPrice = passengerCreationRequest.getTicketPrice();
         if (!airplaneRepository.existsById(airplaneId)){
             throw new ResourceNotFound("You need to add an Existing Plane");
         }

@@ -5,6 +5,7 @@ import com.example.backendairport.service.CabinCrewService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import java.net.URI;
 import java.util.List;
 
 @RestController
@@ -18,48 +19,32 @@ public class CabinCrewController {
         this.cabinCrewService = cabinCrewService;
     }
 
-    //Create
-    @PostMapping(value ="/create-cabinCrew", consumes = "application/json", produces = "application/json")
-    public CabinCrew createCabinCrew(@RequestBody CabinCrewCreationRequest cabinCrewCreationRequest){
-        CabinCrew newCabinCrew = CabinCrew
-                .builder()
-                .name(cabinCrewCreationRequest.getName())
-                .pilots(cabinCrewCreationRequest.getPilots())
-                .crewMembers(cabinCrewCreationRequest.getCrewMembers())
-                .build();
 
-        return cabinCrewService.save(newCabinCrew, cabinCrewCreationRequest.getAirplaneId());
+    @PostMapping(value ="/cabinCrew", consumes = "application/json", produces = "application/json")
+    public ResponseEntity createCabinCrew(@RequestBody CabinCrewCreationRequest cabinCrewCreationRequest){
+        Long cabinCrewId = cabinCrewService.createCabinCrew(cabinCrewCreationRequest).getId();
+        return ResponseEntity.created(URI.create("/cabinCrew/" + cabinCrewId)).body("Operation run smoothly");
     }
 
-    //Read All
-    @GetMapping("/cabinCrew-list")
+    @GetMapping("/cabinCrews")
     public List<CabinCrew> cabinCrewList(){
         return cabinCrewService.findAll();
     }
 
-    //Read by Id
     @GetMapping("/cabinCrew/{id}")
     public CabinCrew cabinCrewById(@PathVariable(value = "id") Long cabinCrewId) {
-        return cabinCrewService.findById(cabinCrewId).get();
+        return cabinCrewService.findById(cabinCrewId);
     }
 
-    //Update
-    @PutMapping(value ="upadate-cabinCrew/{id}", consumes = "application/json", produces = "application/json")
-    public ResponseEntity<CabinCrew> updateCabinCrew(@PathVariable(value = "id") Long cabinCrewId, @RequestBody CabinCrew cabinCrewDetails){
-        CabinCrew cabinCrew = cabinCrewService.findById(cabinCrewId).get();
-
-        cabinCrew.setName(cabinCrewDetails.getName());
-        cabinCrew.setAirplane(cabinCrewDetails.getAirplane());
-        cabinCrew.setCrewMembers(cabinCrewDetails.getCrewMembers());
-        cabinCrew.setPilots(cabinCrewDetails.getPilots());
-
-        final CabinCrew updatedCabinCrew = cabinCrewService.save(cabinCrew);
-        return ResponseEntity.ok(updatedCabinCrew);
+    @PutMapping(value ="cabinCrew/{id}", consumes = "application/json", produces = "application/json")
+    public ResponseEntity updateCabinCrew(@PathVariable(value = "id") Long cabinCrewId, @RequestBody CabinCrewCreationRequest cabinCrewCreationRequest){
+        cabinCrewService.updateCabinCrew(cabinCrewId, cabinCrewCreationRequest);
+        return ResponseEntity.created(URI.create("/cabinCrew/" + cabinCrewId)).body("Operation run smoothly");
     }
 
-    //Delete
-    @DeleteMapping(path = "delete-cabinCrew/{id}")
-    public void deleteCabinCrew(@PathVariable(value = "id") Long cabinCrewId) {
+    @DeleteMapping(path ="cabinCrew/{id}")
+    public ResponseEntity deleteCabinCrew(@PathVariable(value = "id") Long cabinCrewId) {
         cabinCrewService.deleteById(cabinCrewId);
+        return ResponseEntity.created(URI.create("/cabinCrew/")).body("Operation run smoothly");
     }
 }
