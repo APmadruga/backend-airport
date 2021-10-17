@@ -5,6 +5,8 @@ import com.example.backendairport.model.Airplane;
 import com.example.backendairport.model.AirplaneType;
 import com.example.backendairport.repository.AirplaneRepository;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -29,7 +31,11 @@ public class AirplaneService{
     }
 
     public Airplane create(AirplaneCreationRequest airplaneCreationRequest) {
-        if ((airplaneCreationRequest.getAirplaneType() != AirplaneType.AIRBUSA320) ||(airplaneCreationRequest.getAirplaneType() != AirplaneType.BOEING747) ||(airplaneCreationRequest.getAirplaneType() != AirplaneType.JETPLANE)){
+        List<String> listTypes = new ArrayList<String>();
+        listTypes.add(AirplaneType.AIRBUSA320.toString());
+        listTypes.add(AirplaneType.BOEING747.toString());
+        listTypes.add(AirplaneType.JETPLANE.toString());
+        if (!listTypes.contains(airplaneCreationRequest.getAirplaneType().toString())){
             throw new ResourceNotFound("You can only choose AIRBUSA320 or BOING747 or JETPLANE in AirplaneType");
         }
         AirplaneType airplaneType = airplaneCreationRequest.getAirplaneType();
@@ -47,7 +53,11 @@ public class AirplaneService{
     }
 
     public Airplane updateAirplane(Long airplaneId, AirplaneCreationRequest airplaneCreationRequest) {
-        if ((airplaneCreationRequest.getAirplaneType() != AirplaneType.AIRBUSA320) ||(airplaneCreationRequest.getAirplaneType() != AirplaneType.BOEING747) ||(airplaneCreationRequest.getAirplaneType() != AirplaneType.JETPLANE)){
+        List<String> listTypes = new ArrayList<String>();
+        listTypes.add(AirplaneType.AIRBUSA320.toString());
+        listTypes.add(AirplaneType.BOEING747.toString());
+        listTypes.add(AirplaneType.JETPLANE.toString());
+        if (!listTypes.contains(airplaneCreationRequest.getAirplaneType().toString())){
             throw new ResourceNotFound("You can only choose AIRBUSA320 or BOING747 or JETPLANE in AirplaneType");
         }
         AirplaneType airplaneType = airplaneCreationRequest.getAirplaneType();
